@@ -13,7 +13,7 @@ func TestExecute(t *testing.T) {
 
 	sampleFilePath := "testdata/sample.go"
 
-	if err := execute(sampleFilePath); err != nil {
+	if err := execute([]string{sampleFilePath}); err != nil {
 		t.Fatalf("Execution failed: %v", err)
 	}
 
@@ -33,8 +33,8 @@ func TestExecute(t *testing.T) {
 
 	// Validate results
 	assert.Equal(t, 2, len(records), "Incorrect number of records")
-	assert.Equal(t, "HelloWorld", records[0].FunctionName)
-	assert.Equal(t, 1, records[0].LoC)
-	assert.Equal(t, "Add", records[1].FunctionName)
-	assert.Equal(t, 1, records[1].LoC)
+	assert.Equal(t, "Add", records[0].FunctionName)
+	assert.Equal(t, 1, records[0].Complexity)
+	assert.Equal(t, "HelloWorld", records[1].FunctionName)
+	assert.Equal(t, 1, records[1].Complexity)
 }
