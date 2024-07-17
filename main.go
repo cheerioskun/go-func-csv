@@ -33,7 +33,9 @@ func main() {
 func execute(paths []string) error {
 
 	var records []*FuncDetails
+	fmt.Printf("Analyzing files using gocyclo...")
 	stats := gocyclo.Analyze(paths, regexp.MustCompile(".*test.go|asset.go")).SortAndFilter(-1, 1)
+	fmt.Printf("Reformatting to CSV...")
 	for _, stat := range stats {
 		records = append(records, &FuncDetails{
 			FunctionName: stat.FuncName,
@@ -48,7 +50,7 @@ func execute(paths []string) error {
 		return fmt.Errorf("could not open output csv: %v", err)
 	}
 	defer file.Close()
-
+	fmt.Printf("Writing to output file...")
 	if err := gocsv.MarshalFile(records, file); err != nil {
 		return fmt.Errorf("could not write to csv: %v", err)
 	}
